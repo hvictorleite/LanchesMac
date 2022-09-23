@@ -1,10 +1,10 @@
-﻿@model IEnumerable<LanchesMac.Models.Lanche>
+﻿@model LancheListViewModel
 
-<div><h1>Todos os Lanches</h1></div>
+<div><h2>@Model.CategoriaAtual</h2></div>
 
 <div class="container">
     <div class="row">
-        @foreach(var lanche in Model)
+        @foreach(var lanche in Model.Lanches)
         {
             <div class="col-sm-6 col-md-3 col-lg-2 col-xl-1">
                 <p><img src="@(lanche.ImagemUrl)" alt="@(lanche.Nome)" class="img-fluid" /></p>
