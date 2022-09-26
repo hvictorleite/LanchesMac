@@ -2,6 +2,16 @@
     ViewData["Title"] = "Home";
 }
 
-<!-- Exibindo Partial View "_Carousel.cshtml" -->
+@model HomeViewModel
 
+<!-- Exibindo Partial View "_Carousel.cshtml" -->
 <partial name="_Carousel" />
+
+<h2>Os preferidos da semana</h2>
+<h4>Tá com fome ???</h4>
+
+<div class="row">
+    @foreach (var lanche in Model.LanchesPreferidos) {
+        <partial name="_LancheResumo" for="@(lanche)" />
+    }
+</div>
