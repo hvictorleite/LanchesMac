@@ -2,14 +2,13 @@
 
 <div class="container">
     <div class="row">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 26rem;">
             <div class="text-center">
                 <img class="card-img" src="@(Model.ImagemUrl)" alt="Card image cap">
             </div>
             <div class="card-body">
                 <h2 class="card-title">@Model.Nome</h2>
                 <p class="card-text">@Model.DescricaoDetalhada</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
                 <p class="btn btn-group align-content-lg-end">
                     <a class="btn btn-outline-info" asp-controller="Lanche" asp-action="List">Ver todos os lanches</a>
                     <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra" asp-action="AdicionarItemNoCarrinhoCompra" asp-route-lancheId="@(Model.LancheId)"> Adicionar @(Model.Nome) ao carrinho</a>
