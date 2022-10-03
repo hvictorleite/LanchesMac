@@ -64,8 +64,10 @@ namespace LanchesMac.Controllers
                 var user = new IdentityUser() { UserName = registroVM.UserName };
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
-                if (result.Succeeded)
+                if (result.Succeeded) {
+                    await _userManager.AddToRoleAsync(user, "Member");
                     return RedirectToAction("Login", "Account");
+                }
                 else
                     ModelState.AddModelError("Registro", "Falha ao realizar o registro");
             }
