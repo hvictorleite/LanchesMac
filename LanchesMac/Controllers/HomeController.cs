@@ -1,11 +1,13 @@
 ﻿using LanchesMac.Models;
 using LanchesMac.Repositories.Interfaces;
 using LanchesMac.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace LanchesMac.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILancheRepository _lancheRepository;
