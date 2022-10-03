@@ -4,6 +4,7 @@ using LanchesMac.Repositories.Interfaces;
 using LanchesMac.Repositories;
 using LanchesMac.Models;
 using Microsoft.AspNetCore.Identity;
+using LanchesMac.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -40,6 +42,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+CreateUsersRoles(app); // Cria usuários perfis de usuário
 app.UseSession();
 
 app.UseAuthentication();
@@ -57,3 +60,17 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+// ------------------------------------------------------------------------------------
+
+void CreateUsersRoles(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+        service.SeedUsers();
+        service.SeedRoles();
+
+    }
+}
