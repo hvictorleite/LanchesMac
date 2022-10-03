@@ -20,6 +20,10 @@ builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+builder.Services.AddAuthorization(options => {
+options.AddPolicy("Admin", policy => {
+    policy.RequireRole("Admin");});
+});
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
