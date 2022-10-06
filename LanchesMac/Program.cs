@@ -27,6 +27,7 @@ options.AddPolicy("Admin", policy => {
     policy.RequireRole("Admin");});
 });
 builder.Services.AddScoped<RelatorioVendasService>();
+builder.Services.AddScoped<GraficoVendasService>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
