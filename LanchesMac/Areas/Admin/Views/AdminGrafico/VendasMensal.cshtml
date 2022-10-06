@@ -3,28 +3,26 @@
 </title>
 
 
-<!-- Displaying a chart -->
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
 
-<!-- Using Google Charts -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(carregaDados);
 
+    // obter os dados
     function carregaDados() {
         $.ajax({
             url: '@Url.Action("VendasLanches", "AdminGrafico")',
-            data: { dias: 360 },
+            data: { dias: 30 },
             dataType: "json",
             type: "GET",
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var err = eval("(" + xhr.responseText + ")");
                 toastr.error(err.message);
             },
-            success: function(data) {
+            success: function (data) {
                 graficoVendasLanches(data);
                 return false;
             }
@@ -37,14 +35,14 @@
             ['Lanche', 'Quantidade', 'Valores(R$)']
         ];
 
-        $.each(data, function(i, item) {
+        $.each(data, function (i, item) {
             dataArray.push([item.nomeLanche, item.lanchesQuantidade, item.lanchesValorTotal]);
         });
 
         var data = google.visualization.arrayToDataTable(dataArray);
 
         var options = {
-            title: 'Lanches - Vendas nos últimos 360 dias',
+            title: 'Lanches - Vendas nos últimos 30 dias',
             animation: {
                 duration: 3000,
                 easing: 'out',
@@ -53,15 +51,16 @@
             chartArea: { width: '70%' },
             colors: ['#5202b5', '#d2a828'],
             hAxis: {
-                title: 'Valor Total (em Reais)',
+                title: 'Lanches',
                 minValue: 0
             },
             vAxis: {
-                title: 'Lanches'
+                title: 'Valor Total (em Reais)'
             }
         };
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        // prepara a visualização: define o tipo de grafico e o local onde será exibido
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
 </script>
